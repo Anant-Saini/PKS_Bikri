@@ -1,4 +1,4 @@
-package com.perfectkode.bikri.common.util;
+package com.perfectkode.bikri.common.config;
 
 
 

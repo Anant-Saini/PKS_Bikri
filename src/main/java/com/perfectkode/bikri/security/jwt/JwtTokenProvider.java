@@ -5,6 +5,7 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
@@ -30,7 +31,7 @@ public class JwtTokenProvider {
     public String generateToken(Authentication authentication) {
         String email = authentication.getName();
         Date currentDate = new Date();
-        Date expireDate = new Date(currentDate.getTime() + Long.parseLong(jwtProperties.expirationMilliseconds()));
+        Date expireDate = new Date(currentDate.getTime() + jwtProperties.expirationMilliseconds());
 
         // Extract the role from authentication authorities
         String role = authentication.getAuthorities().stream()

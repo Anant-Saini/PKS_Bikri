@@ -48,6 +48,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation:4.1.0'
     // Swagger Open API dependencies
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.1.0'
+    // Redis dependency for OTP caching
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 }
 
 tasks.named('test') {

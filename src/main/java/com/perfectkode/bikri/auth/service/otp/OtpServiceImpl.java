@@ -33,7 +33,7 @@ public class OtpServiceImpl implements OtpService {
             log.info("Active OTP found for {}. Resending existing OTP.", email);
         } else {
             // Generate a new 4-digit random OTP
-            otpToSend = generate4DigitOtp();
+            otpToSend = generate4DigitAlphaNumericOtp();
             // Store in Redis with 5 minutes TTL
             redisTemplate.opsForValue().set(key, otpToSend, OTP_EXPIRATION_MINUTES, TimeUnit.MINUTES);
             log.info("Generated new OTP for {}.", email);

@@ -2,6 +2,7 @@ package com.perfectkode.bikri.auth.service.auth;
 
 import com.perfectkode.bikri.auth.dto.request.LoginRequest;
 import com.perfectkode.bikri.auth.dto.request.RegisterRequest;
+import com.perfectkode.bikri.auth.dto.request.ResendOtpRequest;
 import com.perfectkode.bikri.auth.dto.request.VerifyOtpRequest;
 import com.perfectkode.bikri.auth.dto.response.ApiResponse;
 import com.perfectkode.bikri.auth.dto.response.AuthResponse;
@@ -23,6 +24,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.event.TransactionPhase;
+import org.springframework.transaction.event.TransactionalEventListener;
+
+import java.time.Instant;
 
 @Service
 @RequiredArgsConstructor
@@ -54,7 +59,7 @@ public class AuthServiceImpl implements AuthService {
                 passwordEncoder.encode(registerRequest.password()),
                 false, // isVerified
                 true, // isEnabled
-                null, // createdAt will be set automatically
+                Instant.now(), // createdAt will be set automatically
                 userRole
         );
         User savedUser = userRepository.save(user);
@@ -85,6 +90,22 @@ public class AuthServiceImpl implements AuthService {
         userRepository.save(user);
 
         return new ApiResponse(true, "Email verified successfully. You can now login.");
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ApiResponse resendOtp(ResendOtpRequest request) {
+        User user = userRepository.findByEmail(request.email())
+                .orElseThrow(() -> new UserNotFoundException("User not found with email: " + request.email()));
+
+        if (user.isVerified()) {
+            return new ApiResponse(true, "Email is already verified. Please login.");
+        }
+
+        // Trigger OTP generation/resend logic (returns existing active OTP if not expired)
+        otpService.sendOtp(user.getEmail());
+
+        return new ApiResponse(true, "Verification OTP has been resent to your email.");
     }
 
     @Override
