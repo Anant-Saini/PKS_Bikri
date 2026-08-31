@@ -31,6 +31,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
         ErrorResponse errorResponse = new ErrorResponse(
                 HttpStatus.UNAUTHORIZED.value(),
                 HttpStatus.UNAUTHORIZED.getReasonPhrase(),
+                "AUTHENTICATION_FAILED",
                 "Authentication failed: " + authException.getMessage(),
                 request.getRequestURI()
         );

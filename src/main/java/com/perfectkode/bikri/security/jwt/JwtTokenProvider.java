@@ -30,7 +30,7 @@ public class JwtTokenProvider {
     public String generateToken(Authentication authentication) {
         String email = authentication.getName();
         Date currentDate = new Date();
-        Date expireDate = new Date(currentDate.getTime() + jwtProperties.expirationMilliseconds());
+        Date expireDate = new Date(currentDate.getTime() + Long.parseLong(jwtProperties.expirationMilliseconds()));
 
         // Extract the role from authentication authorities
         String role = authentication.getAuthorities().stream()

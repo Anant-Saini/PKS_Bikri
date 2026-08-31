@@ -3,13 +3,13 @@ package com.perfectkode.bikri.auth.exception;
 import com.perfectkode.bikri.common.exception.CustomApplicationException;
 import org.springframework.http.HttpStatus;
 
-public class UserAlreadyExistsException extends CustomApplicationException {
+public class AccountNotVerifiedException extends CustomApplicationException {
 
-    public UserAlreadyExistsException(String message) {
+    public AccountNotVerifiedException(String message) {
         super(
                 message,
-                HttpStatus.CONFLICT,
-                "USER_ALREADY_EXISTS"
+                HttpStatus.FORBIDDEN,
+                "ACCOUNT_NOT_VERIFIED"
         );
     }
 }

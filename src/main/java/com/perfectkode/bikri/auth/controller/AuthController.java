@@ -2,8 +2,9 @@ package com.perfectkode.bikri.auth.controller;
 
 import com.perfectkode.bikri.auth.dto.request.LoginRequest;
 import com.perfectkode.bikri.auth.dto.request.RegisterRequest;
+import com.perfectkode.bikri.auth.dto.response.ApiResponse;
 import com.perfectkode.bikri.auth.dto.response.AuthResponse;
-import com.perfectkode.bikri.auth.service.AuthService;
+import com.perfectkode.bikri.auth.service.auth.AuthService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +24,8 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthResponse> register(@Valid @RequestBody RegisterRequest registerRequest) {
-        AuthResponse response = authService.register(registerRequest);
+    public ResponseEntity<ApiResponse> register(@Valid @RequestBody RegisterRequest registerRequest) {
+        ApiResponse response = authService.register(registerRequest);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 

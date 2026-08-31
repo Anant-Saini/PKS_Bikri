@@ -30,6 +30,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
         ErrorResponse errorResponse = new ErrorResponse(
                 HttpStatus.FORBIDDEN.value(),
                 HttpStatus.FORBIDDEN.getReasonPhrase(),
+                "ACCESS_DENIED",
                 "Access Denied: You do not have permission to access this resource",
                 request.getRequestURI()
         );

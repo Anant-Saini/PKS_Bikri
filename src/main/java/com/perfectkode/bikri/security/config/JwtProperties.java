@@ -15,7 +15,7 @@ public record JwtProperties(
     /**
      * Token expiration duration in milliseconds (default 24 hours).
      */
-    long expirationMilliseconds
+    String expirationMilliseconds
 ) {
 
 }
