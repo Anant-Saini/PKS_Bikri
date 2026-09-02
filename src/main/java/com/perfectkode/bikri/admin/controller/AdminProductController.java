@@ -88,4 +88,17 @@ public class AdminProductController {
         List<ProductResponse> responses = productService.listProducts();
         return ResponseEntity.ok(responses);
     }
+
+    @Operation(summary = "Get Product By Id", description = "Retrieves an active product by Id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Product retrieved successfully"),
+            @ApiResponse(responseCode = "403", description = "Forbidden - Admin access required")
+    })
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductResponse> getProductById(@PathVariable("id") UUID id) {
+        ProductResponse response = productService.getProductById(id);
+        return ResponseEntity.ok(response);
+    }
+
+
 }

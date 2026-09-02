@@ -118,6 +118,12 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public ProductResponse getProductById(UUID id) {
+        Product product = fetchActiveProduct(id);
+        return productMapper.toDto(product);
+    }
+
     private Product fetchActiveProduct(UUID productId) {
         return productRepository.findByIdAndActive(productId, true)
                 .orElseThrow(() -> new ProductNotFoundException("Product not found with ID: " + productId));
