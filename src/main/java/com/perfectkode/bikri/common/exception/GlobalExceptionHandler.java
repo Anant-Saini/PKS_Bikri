@@ -1,10 +1,13 @@
 package com.perfectkode.bikri.common.exception;
 
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
@@ -130,12 +133,12 @@ public class    GlobalExceptionHandler {
             Exception ex,
             HttpServletRequest request
     ) {
-        log.error(ex.getMessage(), ex);
+        log.error("Unhandled exception caught: ", ex);
         ErrorResponse errorResponse = new ErrorResponse(
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
                 "INTERNAL_SERVER_ERROR",
-                "An unexpected error occurred: "+ex.getStackTrace().toString(),
+                "An unexpected error occurred. Please try again later.",
                 request.getRequestURI()
         );
 
